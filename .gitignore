@@ -1,0 +1,6 @@
+.vscode
+website/__pycache__
+website/database.db
+venv
+instance/blameeve.db
+__pycache__

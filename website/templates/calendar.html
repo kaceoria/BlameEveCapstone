@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}Calendar{% endblock %}
+
+{% block content %}
+<h1>{{ user.first_name }}'s Calendar</h1>
+
+   <form method="POST">
+       <label for="start_date">Start Date:</label>
+       <input type="date" name="start_date" required>
+
+       <label for="end_date">End Date:</label>
+       <input type="date" name="end_date" required>
+
+       <button type="submit">Add Period</button>
+   </form>
+
+   <ul>
+       {% for period in periods %}
+           <li>{{ period.start_date }} to {{ period.end_date }}</li>
+       {% endfor %}
+   </ul>
+{% endblock %} 
