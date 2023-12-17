@@ -1,21 +1,131 @@
-{% extends "base.html" %} {% block title %}Calendar{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+    <title>Period Tracker</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" id="home" href="/">Home</a>
+            <a class="nav-item nav-link" id="calendar" href="/calendar">Calendar</a>
+            <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+          </div>
+        </div>
+      </nav>
+      <div>
+        <h1>Period Tracker</h1>
 
-{% block content %}
-<h1>{{ user.first_name }}'s Calendar</h1>
+            <p>Current Date: {{ current_date.strftime('%B %d') }}</p>
 
-   <form method="POST">
-       <label for="start_date">Start Date:</label>
-       <input type="date" name="start_date" required>
+            {% if predicted_next_period_start %}
+                <p>Projected Start Date: {{ predicted_next_period_start }}</p>
+            {% endif %}
 
-       <label for="end_date">End Date:</label>
-       <input type="date" name="end_date" required>
+            {% if days_until_next_period %}
+                <p>Days Until Next Period: {{ days_until_next_period }}</p>
+            {% endif %}
 
-       <button type="submit">Add Period</button>
-   </form>
+            <form method="post" action="{{ url_for('auth.calendar') }}">
+                <label for="start_date">Enter start date:</label>
+                <input type="date" name="start_date" required>
+                <button type="submit" name="start_period">Period Started!</button>
+            </form>
+            <form method="post" action="{{ url_for('auth.add_symptom') }}">
+                <label for="symptom">Add Symptom:</label>
+                <input type="text" name="symptom" required>
+                <button type="submit" name="add_symptom">Add Symptom</button>
+            </form>
 
-   <ul>
-       {% for period in periods %}
-           <li>{{ period.start_date }} to {{ period.end_date }}</li>
-       {% endfor %}
-   </ul>
-{% endblock %} 
+            <h2>Periods:</h2>
+            <ul>
+                {% for period in periods %}
+                    <li>
+                        {{ period.start_date }} - {{ period.end_date or 'Not Ended Yet' }}
+                        {% if not period.end_date %}
+                            <form method="post" action="{{ url_for('auth.calendar') }}" style="display: inline;">
+                                <input type="hidden" name="period_id" value="{{ period.id }}">
+                                <label for="end_date">Enter end date:</label>
+                                <input type="date" name="end_date" required>
+                                <button type="submit" name="end_period">Period Ended</button>
+                            </form>
+                        {% endif %}
+                        <form method="post" action="{{ url_for('views.delete_period') }}" style="display: inline;">
+                            <input type="hidden" name="period_id" value="{{ period.id }}">
+                            <button type="submit" name="delete_period">Delete</button>
+                        </form>
+
+                        <select name="symptoms" multiple>
+                            {% for symptom in period.symptoms %}
+                                <option>{{ symptom.symptom }}</option>
+                            {% endfor %}
+                        </select>
+                    </li>
+                {% endfor %}
+            </ul>
+      </div>
+    
+
+    <div class="container">
+        {% block content %}
+        {% endblock %} 
+        </div>
+    
+        <script
+          src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"
+        ></script>
+        <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"
+        ></script>
+        <script
+          src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous"
+        ></script>
+    
+        <script>
+            type="text/javascript"
+            src="{{ url_for('static', filename='index.js')}}"
+        </script>
+       
+    <script>
+    
+        document.addEventListener('DOMContentLoaded', function() {
+          var calendarEl = document.getElementById('calendar');
+          var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth'
+          });
+          calendar.render();
+        });
+    
+      </script>
+    
+
+</body>
+</html>

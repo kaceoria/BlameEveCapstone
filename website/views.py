@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, flash, jsonify, url_for
 from flask_login import login_required, current_user
-from .models import Note, User
+from .models import Note, User, Period
 from . import db 
 import json
 
@@ -34,3 +34,28 @@ def delete_note():
             db.session.commit()
             
     return jsonify({})
+
+@views.route('/delete_period', methods=['POST'])
+def delete_period():
+    if request.method == 'POST':
+        period = json.loads(request.symptom)
+        periodId = period['period_id']
+        period = Period.query.get(periodId)
+        if period:
+            if period.user_id == current_user.id:
+                db.session.delete(period)
+                db.session.commit()
+        return jsonify({})
+
+    #return redirect(url_for('auth.calendar'))
+#@views.route('/delete_period', methods=['POST'])
+#def delete_period():
+ #   if request.method == 'POST':
+  #      period_id = int(request.form['period_id'])
+   #     period = Period.query.get(period_id)
+        
+    #    if period:
+     #       db.session.delete(period)
+      #      db.session.commit()
+
+   # return redirect(url_for('auth.calendar'))

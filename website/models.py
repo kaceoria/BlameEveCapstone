@@ -1,6 +1,7 @@
 from . import db 
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from sqlalchemy import ForeignKey
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -13,12 +14,13 @@ class Period(db.Model):
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    symptoms = db.relationship('Symptoms', backref='period', lazy=True)
+    symptoms = db.relationship('Symptoms', backref='period_association', lazy=True)
     
 class Symptoms(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     symptom = db.Column(db.String(150))
     period_id = db.Column(db.Integer, db.ForeignKey('period.id'))
+    period = db.relationship('Period', backref='symptoms_association', lazy=True)
     
 class Reminders(db.Model):
     id = db.Column(db.Integer,primary_key=True)
