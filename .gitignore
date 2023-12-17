@@ -1,6 +1,47 @@
-.vscode
-website/__pycache__
-website/database.db
-venv
-instance/blameeve.db
-__pycache__
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+dist/
+eggs/
+*.egg-info/
+*.egg
+
+# Virtual environment
+venv/
+venv37/
+VENV/
+
+# IDEs
+.idea/
+.vscode/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# Environment variables
+.env
+
+# Compiled source
+__pycache__/
+*.pyc
+
+# Miscellaneous
+*.bak
+*.swp
+*.tmp
+
+# Mac OS
+.DS_Store
