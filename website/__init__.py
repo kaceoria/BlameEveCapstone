@@ -10,8 +10,8 @@ DB_NAME = "blameeve.db"
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'this is my secret key'
-   #app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://blameeverender_user:ArgFnIEejNZa0FJrDME8YbWxe63090tH@dpg-clvlk65a73kc73br508g-a.oregon-postgres.render.com/blameeverender'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://blameeverender_user:ArgFnIEejNZa0FJrDME8YbWxe63090tH@dpg-clvlk65a73kc73br508g-a.oregon-postgres.render.com/blameeverender'
     #postgres://blameeverender_user:ArgFnIEejNZa0FJrDME8YbWxe63090tH@dpg-clvlk65a73kc73br508g-a.oregon-postgres.render.com/blameeverender
     db.init_app(app)
 

@@ -20,7 +20,7 @@
     <script>
         $(document).ready(function() {
             // Attach a click event to the checkboxes
-            $('input[type="checkbox"][name="symptoms"]').on('change', function() {
+            $('input[type="checkbox"][name="symptom[]"]').on('change', function() {
                 // Get the selected symptom value
                 var symptomValue = $(this).val();
                 
@@ -68,7 +68,7 @@
         <div class="collapse navbar-collapse" id="navbar">
           <div class="navbar-nav">
             <a class="nav-item nav-link" id="home" href="/">Home</a>
-            <a class="nav-item nav-link" id="calendar" href="/calendar">Calendar</a>
+            <a class="nav-item nav-link" id="calendar" href="/calendar">Period Tracker</a>
             <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
           </div>
         </div>
@@ -124,7 +124,7 @@
                                 {% endfor %}
                             </ul>
                             <input type="hidden" name="period_id" value="{{ period.id }}">
-                            <button type="submit" name="add_symptom">Add Symptoms</button>
+                            <button type="button" class="add-symptom">Add Symptoms</button>
                         </form>
 
                         <ul>
@@ -155,9 +155,6 @@
 
     <div class="container">
         {% block content %}
-        {% endblock %} 
-        </div>
-    
         <script
           src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
           integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -175,22 +172,34 @@
         ></script>
     
         <script>
-            type="text/javascript"
-            src="{{ url_for('static', filename='index.js')}}"
+            $('.add-symptom').on('click', function() {
+                // Get the associated period ID
+                var periodId = $(this).closest('li').find('input[name="period_id"]').val();
+                
+                // Save the symptom using an AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("auth.add_symptom") }}',
+                    data: {
+                        symptoms: $('input[type="checkbox"][name="symptom[]"]:checked').map(function() {
+                            return this.value;
+                        }).get(),
+                        period_id: periodId
+                    },
+                    traditional: true,
+                    success: function(response) {
+                        // Handle the success response if needed
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        // Handle the error if needed
+                        console.error(error);
+                    }
+                });
+            });
         </script>
-       
-    <script>
-    
-        document.addEventListener('DOMContentLoaded', function() {
-          var calendarEl = document.getElementById('calendar');
-          var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth'
-          });
-          calendar.render();
-        });
-    
-      </script>
-    
+        {% endblock %} 
+    </div>     
 
 </body>
 </html>
