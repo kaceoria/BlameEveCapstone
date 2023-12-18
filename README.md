@@ -1,6 +1,6 @@
-#Blame Eve Web App
+# Blame Eve Web App
 
-###This is a web application designed for people with periods
+### This is a web application designed for people with periods
 
 Blame eve is designed to track your period, predict your next period, and add symptoms that you are experiencing. 
 This was designed to look as neutral as possible, so anyone can feel comfortable using it. 
