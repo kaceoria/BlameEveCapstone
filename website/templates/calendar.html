@@ -110,7 +110,7 @@
 
                         <form method="post" action="{{ url_for('views.delete_period') }}" style="display: inline;">
                             <input type="hidden" name="period_id" value="{{ period.id }}">
-                            <button type="submit" name="delete_period">Delete</button>
+                            <button type="button" name="delete_period">Delete</button>
                         </form>
 
                         <form method="post" action="{{ url_for('auth.add_symptom') }}">
@@ -118,13 +118,13 @@
                             <ul>
                                 {% for symptom in symptom_options %}
                                     <li>
-                                        <input type="checkbox" name="symptom[]" value="{{ symptom }}" id="{{ symptom }}_{{ period.id }}">
+                                        <input type="checkbox" name="symptoms[]" value="{{ symptom }}" id="{{ symptom }}_{{ period.id }}">
                                         <label for="{{ symptom }}_{{ period.id }}">{{ symptom }}</label>
                                     </li>
                                 {% endfor %}
                             </ul>
                             <input type="hidden" name="period_id" value="{{ period.id }}">
-                            <button type="button" class="add-symptom">Add Symptoms</button>
+                            <button type="submit" class="add-symptoms">Add Symptoms</button>
                         </form>
 
                         <ul>
@@ -139,17 +139,17 @@
             <p>No periods added yet. Add a period entry first.</p>
         {% endif %}
         {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{ category }} alert-dismissable fade show" role="alert">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissable fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
     </div>
     
 

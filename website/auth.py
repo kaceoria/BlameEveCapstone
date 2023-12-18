@@ -174,26 +174,21 @@ def add_symptom():
 def add_symptom():
     if request.method == 'POST':
         period_id = request.form.get('period_id')
-        symptom_value = request.form.get('symptom')
+        symptoms = request.form.getlist('symptoms[]')
 
-        # Ensure that both period_id and symptom_value are provided
-        if period_id and symptom_value:
+        if period_id and symptoms:
             period = Period.query.get(period_id)
 
             if period:
-                # Check if the symptom already exists for the period
-                existing_symptom = Symptoms.query.filter_by(period_id=period.id, symptom=symptom_value).first()
+                existing_symptoms = Symptoms.query.filter(Symptoms.period_id == period.id, Symptoms.symptom.in_(symptoms)).all()
 
-                if not existing_symptom:
-                    # Create a new symptom and associate it with the period
-                    new_symptom = Symptoms(symptom=symptom_value, period=period)
-                    db.session.add(new_symptom)
-                    db.session.commit()
-                    flash('Symptom added successfully!', 'success')
-                else:
-                    flash('Symptom already exists for this period!', 'warning')
+                for symptom in symptoms:
+                    if symptom not in [existing.symptom for existing in existing_symptoms]:
+                        new_symptom = Symptoms(symptom=symptom, period=period)
+                        db.session.add(new_symptom)
 
-                return redirect(url_for('auth.calendar'))
+                db.session.commit()
+                flash('Symptoms added successfully!', 'success')
             else:
                 flash('Invalid period ID!', 'error')
         else:
