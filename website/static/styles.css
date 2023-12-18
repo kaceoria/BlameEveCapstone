@@ -1,0 +1,38 @@
+h1{
+    color: black;
+    font: Candara;
+    font-size: 100px;
+}
+button {
+    background-color: tan;
+    border-radius: 50px;
+    border-color: saddlebrown;
+    padding: 5px;
+    color: saddlebrown;
+  }
+
+  p{
+    font: Candara;
+    font-size: 30px;
+    color: black;
+    font-weight: bold;
+  }
+
+  body{
+    background-image: url("https://reasons-prod.storage.googleapis.com/wp-content/uploads/2022/06/shutterstock_1383737198-scaled.jpg");
+    ; 
+    opacity: 0.6;
+  }
+
+  .jumbotron{
+    background-color: clear;
+  }
+a{
+    font-size: 20px;
+    font-weight: bold;
+    color: olivedrab;
+}
+
+nav{
+    color: black;
+}

@@ -1,0 +1,32 @@
+  h1{
+    font: Candara;
+    font-size: 150px;
+    font-weight: bold;
+  }
+
+
+  p{
+    font: Candara;
+    font-size: 25px;
+    color: saddlebrown;
+  }
+
+  button {
+    background-color: tan;
+    border-radius: 50px;
+    border-color: saddlebrown;
+    padding: 5px;
+    color: saddlebrown;
+  }
+
+  h5{
+    color: saddlebrown;
+  }
+
+  body{
+    background-color: tan;
+  }
+
+  h2,.jumbotron{
+    color: olivedrab;
+  }
