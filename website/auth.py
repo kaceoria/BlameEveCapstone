@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 from .models import User, Period, Symptoms
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
@@ -154,22 +154,6 @@ def calculate_predicted_next_period(periods):
 
     return predicted_next_period_start
 
-"""
-@auth.route('/add_symptom', methods=['POST'])
-def add_symptom():
-    if request.method == 'POST':
-        period_id = int(request.form['period_id'])
-        period = Period.query.get(period_id)
-
-        if period:
-            symptom_text = request.form['symptom']
-            symptom = Symptoms(symptom=symptom_text, period=period)
-            db.session.add(symptom)
-            db.session.commit()
-
-    return redirect(url_for('auth.calendar'))
-
-"""
 @auth.route('/add_symptom', methods=['POST'])
 def add_symptom():
     if request.method == 'POST':

@@ -72,19 +72,19 @@
             <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
           </div>
         </div>
-      </nav>
+    </nav>
 
-      <div>
-        <h1> Period Tracker</h1>
+    <div class="jumbotron text-center">
+        <h1 align="center"> Period Tracker</h1>
 
-        <p>Current Date: {{ current_date.strftime('%B %d') }}</p>
+        <p align="center">Current Date: {{ current_date.strftime('%B %d') }}</p>
 
         {% if predicted_next_period_start %}
-            <p>Projected Start Date: {{ predicted_next_period_start }}</p>
+            <p align="center">Projected Start Date: {{ predicted_next_period_start }}</p>
         {% endif %}
 
         {% if days_until_next_period %}
-            <p>Days Until Next Period: {{ days_until_next_period }}</p>
+            <p align="center">Days Until Next Period: {{ days_until_next_period }}</p>
         {% endif %}
 
         <form method="post" action="{{ url_for('auth.calendar') }}">
@@ -92,6 +92,9 @@
             <input type="date" name="start_date" required>
             <button type="submit" name="start_period">Period Started!</button>
         </form>
+    </div>
+      
+    <div class="container">
 
         {% if periods %}
             <h2>Periods:</h2>
