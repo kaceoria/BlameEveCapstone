@@ -117,7 +117,9 @@
                         </form>
 
                         <form method="post" action="{{ url_for('auth.add_symptom') }}">
-                            <label>Add Symptoms:</label>
+                            <h5>
+                                <label>Add Symptoms:</label>
+                            </h5>
                             <ul>
                                 {% for symptom in symptom_options %}
                                     <li>
@@ -129,12 +131,15 @@
                             <input type="hidden" name="period_id" value="{{ period.id }}">
                             <button type="submit" class="add-symptoms">Add Symptoms</button>
                         </form>
+                        <br />
 
+                        <h5>Period Symptoms:</h5>
                         <ul>
                             {% for symptom in period.symptoms %}
                                 <li>{{ symptom.symptom }}</li>
                             {% endfor %}
                         </ul>
+                        <br />
                     </li>
                 {% endfor %}
             </ul>
