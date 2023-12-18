@@ -114,7 +114,7 @@
 
                         <form method="post" action="{{ url_for('views.delete_period') }}" style="display: inline;">
                             <input type="hidden" name="period_id" value="{{ period.id }}">
-                            <button type="button" name="delete_period">Delete</button>
+                            <button type="submit" name="delete_period">Delete</button>
                         </form>
 
                         <form method="post" action="{{ url_for('auth.add_symptom') }}">
